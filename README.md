@@ -1,6 +1,6 @@
 <div align="center">
     <picture>
-        <img alt="agent-workspace banner" src="media/banner.png">
+        <img alt="agent-workspace banner" src="https://raw.githubusercontent.com/alexngai/agent-workspace/main/media/banner.png">
     </picture>
 </div>
 
