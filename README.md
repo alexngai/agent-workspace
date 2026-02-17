@@ -1,3 +1,9 @@
+<div align="center">
+    <picture>
+        <img alt="agent-workspace banner" src="media/banner.png">
+    </picture>
+</div>
+
 # agent-workspace
 
 Filesystem workspace management for AI agents. Provides directory structure, typed I/O (JSON, JSONL, Markdown, raw text), and output validation with structured error reporting.

@@ -91,7 +91,7 @@ export class WorkspaceManager {
     let pruned = 0;
 
     for (const handle of handles) {
-      if (handle.createdAt.getTime() < cutoff) {
+      if (handle.createdAt.getTime() <= cutoff) {
         await this.cleanup(handle);
         pruned++;
       }

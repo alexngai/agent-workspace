@@ -25,12 +25,18 @@
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "version:patch": "npm version patch && git push && git push --tags",
+    "version:minor": "npm version minor && git push && git push --tags",
+    "version:major": "npm version major && git push && git push --tags",
+    "publish:npm": "npm run build && npm publish"
   },
   "engines": {
     "node": ">=18"
   },
   "license": "MIT",
+  "author": "Alex Ngai",
   "dependencies": {
     "yaml": "^2.7.0"
   },
