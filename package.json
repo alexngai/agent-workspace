@@ -36,6 +36,10 @@
   "engines": {
     "node": ">=18"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexngai/agent-workspace.git"
+  },
   "license": "MIT",
   "author": "Alex Ngai",
   "dependencies": {
