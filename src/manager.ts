@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as os from 'os';
 import * as crypto from 'crypto';
 import { WorkspaceHandle } from './handle.js';
+import { initializeSandbox } from './sandbox.js';
 import type { CreateWorkspaceOptions, WorkspaceManagerConfig, WorkspaceMeta } from './types.js';
 
 const DEFAULT_DIRS = ['input', 'output', 'resources', 'scratch'];
@@ -44,11 +45,19 @@ export class WorkspaceManager {
 
     await fs.writeFile(path.join(workspacePath, META_FILE), JSON.stringify(meta, null, 2));
 
-    return new WorkspaceHandle(id, workspacePath, allDirs, new Date(meta.createdAt));
+    // Initialize sandbox if configured
+    const sandbox = options.sandbox?.enabled
+      ? await initializeSandbox(options.sandbox, workspacePath)
+      : undefined;
+
+    return new WorkspaceHandle(id, workspacePath, allDirs, new Date(meta.createdAt), sandbox);
   }
 
-  /** Remove a workspace from disk. */
+  /** Remove a workspace from disk. Tears down sandbox if active. */
   async cleanup(handle: WorkspaceHandle): Promise<void> {
+    if (handle.sandbox?.active) {
+      await handle.sandbox.destroy();
+    }
     await fs.rm(handle.path, { recursive: true, force: true });
   }
 

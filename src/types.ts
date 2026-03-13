@@ -10,6 +10,8 @@ export interface Schema<T = unknown> {
 export interface CreateWorkspaceOptions {
   /** Extra top-level directories to create alongside the defaults. */
   additionalDirs?: string[];
+  /** Enable sandbox isolation for commands run in this workspace. */
+  sandbox?: SandboxConfig;
 }
 
 /** Configuration for WorkspaceManager. */
@@ -65,4 +67,40 @@ export interface ValidationError {
 export interface ValidationResult {
   valid: boolean;
   errors: ValidationError[];
+}
+
+// -- Sandbox types --
+
+/** Network restrictions for sandboxed workspaces. */
+export interface SandboxNetworkConfig {
+  /** Domains the sandbox is allowed to reach (e.g. `["github.com", "*.npmjs.org"]`). */
+  allowedDomains?: string[];
+  /** Domains explicitly blocked. */
+  deniedDomains?: string[];
+  /** Allow binding to localhost ports inside the sandbox. */
+  allowLocalBinding?: boolean;
+}
+
+/** Extra filesystem restrictions beyond the workspace-scoped defaults. */
+export interface SandboxFilesystemConfig {
+  /** Additional paths to deny reading (e.g. `["~/.ssh"]`). */
+  denyRead?: string[];
+  /** Paths to re-allow within denied regions. */
+  allowRead?: string[];
+  /** Additional writable paths outside the workspace. */
+  extraWritePaths?: string[];
+  /** Paths to deny writing even inside writable regions. */
+  denyWrite?: string[];
+}
+
+/** Configuration for enabling sandbox isolation on a workspace. */
+export interface SandboxConfig {
+  /** Enable sandbox isolation. */
+  enabled: boolean;
+  /** Network restrictions. Defaults to no network access. */
+  network?: SandboxNetworkConfig;
+  /** Additional filesystem restrictions beyond workspace-scoped defaults. */
+  filesystem?: SandboxFilesystemConfig;
+  /** Allow weaker nested sandbox (e.g. inside Docker). */
+  enableWeakerNestedSandbox?: boolean;
 }

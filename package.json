@@ -42,10 +42,19 @@
   },
   "license": "MIT",
   "author": "Alex Ngai",
+  "peerDependencies": {
+    "@anthropic-ai/sandbox-runtime": ">=0.0.40"
+  },
+  "peerDependenciesMeta": {
+    "@anthropic-ai/sandbox-runtime": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "yaml": "^2.7.0"
   },
   "devDependencies": {
+    "@anthropic-ai/sandbox-runtime": "^0.0.42",
     "@types/node": "^20.11.0",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0",
