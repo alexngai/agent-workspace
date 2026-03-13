@@ -2,6 +2,9 @@
 export { WorkspaceManager } from './manager.js';
 export { WorkspaceHandle } from './handle.js';
 
+// Sandbox
+export { SandboxHandle, buildRuntimeConfig, initializeSandbox } from './sandbox.js';
+
 // Validation
 export { validateOutput } from './validation.js';
 
@@ -26,6 +29,9 @@ export type {
   OutputSpec,
   ValidationError,
   ValidationResult,
+  SandboxConfig,
+  SandboxNetworkConfig,
+  SandboxFilesystemConfig,
 } from './types.js';
 
 export type { ReadJsonOptions } from './readers/json.js';

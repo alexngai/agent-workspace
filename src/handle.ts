@@ -6,19 +6,23 @@ import { readJson, readJsonl, readJsonDir, type ReadJsonOptions } from './reader
 import { readMarkdown, type ReadMarkdownOptions } from './readers/markdown.js';
 import { readRaw, listFiles } from './readers/raw.js';
 import { validateOutput } from './validation.js';
+import type { SandboxHandle } from './sandbox.js';
 import type { MarkdownDocument, OutputSpec, ValidationResult } from './types.js';
 
 export class WorkspaceHandle {
   readonly id: string;
   readonly path: string;
   readonly createdAt: Date;
+  /** Sandbox handle, if this workspace was created with sandbox isolation. */
+  readonly sandbox: SandboxHandle | undefined;
   private readonly dirs: string[];
 
-  constructor(id: string, workspacePath: string, dirs: string[], createdAt: Date) {
+  constructor(id: string, workspacePath: string, dirs: string[], createdAt: Date, sandbox?: SandboxHandle) {
     this.id = id;
     this.path = workspacePath;
     this.dirs = dirs;
     this.createdAt = createdAt;
+    this.sandbox = sandbox;
   }
 
   /** Get the absolute path to a section directory. */
@@ -118,5 +122,18 @@ export class WorkspaceHandle {
 
   async validateOutput(spec: OutputSpec): Promise<ValidationResult> {
     return validateOutput(this.outputDir, spec);
+  }
+
+  // -- Sandbox --
+
+  /**
+   * Wrap a shell command so it runs inside the workspace sandbox.
+   * Throws if the workspace was not created with sandbox enabled.
+   */
+  async wrapCommand(command: string, abortSignal?: AbortSignal): Promise<string> {
+    if (!this.sandbox) {
+      throw new Error('This workspace was not created with sandbox isolation enabled.');
+    }
+    return this.sandbox.wrapCommand(command, abortSignal);
   }
 }
