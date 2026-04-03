@@ -18,6 +18,21 @@ export { readJson, readJsonl, readJsonDir } from './readers/json.js';
 export { readMarkdown } from './readers/markdown.js';
 export { readRaw, listFiles } from './readers/raw.js';
 
+// Task execution
+export { TaskRunner, TaskOutputError } from './task/index.js';
+export type {
+  TaskTemplate,
+  TaskComplexity,
+  AgentBackend,
+  AgentSpawnConfig,
+  AgentResult,
+  SkillSpec,
+  ResourceSpec,
+  TaskRunnerConfig,
+  TaskRunnerHooks,
+  TaskResult,
+} from './task/index.js';
+
 // Types
 export type {
   Schema,
