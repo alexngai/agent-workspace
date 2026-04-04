@@ -31,7 +31,10 @@ export type {
   TaskRunnerConfig,
   TaskRunnerHooks,
   TaskResult,
+  WorkspaceExecuteParams,
+  WorkspaceResultParams,
 } from './task/index.js';
+export { WORKSPACE_METHODS, WORKSPACE_METHODS_LEGACY } from './task/index.js';
 
 // Types
 export type {
