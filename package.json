@@ -1,6 +1,6 @@
 {
   "name": "agent-workspace",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Filesystem workspace management for agents — directory structure, typed I/O, and validation",
   "type": "module",
   "main": "./dist/index.cjs",
