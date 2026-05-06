@@ -8,6 +8,7 @@ export default defineConfig({
     'src/protocol/resource-events.ts',
     'src/protocol/repo.ts',
     'src/kinds/repo/index.ts',
+    'src/kinds/repo/testing.ts',
   ],
   format: ['esm', 'cjs'],
   dts: true,

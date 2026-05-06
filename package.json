@@ -66,6 +66,16 @@
         "types": "./dist/kinds/repo/index.d.cts",
         "default": "./dist/kinds/repo/index.cjs"
       }
+    },
+    "./kinds/repo/testing": {
+      "import": {
+        "types": "./dist/kinds/repo/testing.d.ts",
+        "default": "./dist/kinds/repo/testing.js"
+      },
+      "require": {
+        "types": "./dist/kinds/repo/testing.d.cts",
+        "default": "./dist/kinds/repo/testing.cjs"
+      }
     }
   },
   "files": [

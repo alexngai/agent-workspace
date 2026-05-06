@@ -181,3 +181,21 @@ describe('agent-workspace/kinds/repo', () => {
     expect(mod.registerRepoHandlers).toBeTypeOf('function');
   });
 });
+
+describe('agent-workspace/kinds/repo/testing (slice 5)', () => {
+  it('exports InMemoryRepoHandler', async () => {
+    const mod = await import('../../src/kinds/repo/testing.js');
+    expect(mod.InMemoryRepoHandler).toBeTypeOf('function');
+  });
+
+  it('exports MockRepoTransport', async () => {
+    const mod = await import('../../src/kinds/repo/testing.js');
+    expect(mod.MockRepoTransport).toBeTypeOf('function');
+  });
+
+  it('testing utilities are NOT re-exported from the main kinds/repo umbrella', async () => {
+    const main = await import('../../src/kinds/repo/index.js');
+    expect((main as Record<string, unknown>).InMemoryRepoHandler).toBeUndefined();
+    expect((main as Record<string, unknown>).MockRepoTransport).toBeUndefined();
+  });
+});
