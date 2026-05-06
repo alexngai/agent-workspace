@@ -86,4 +86,83 @@ describe('agent-workspace package root', () => {
     expect(mod.WORKSPACE_METHODS).toBeDefined();
     expect(mod.WORKSPACE_METHODS_LEGACY).toBeDefined();
   });
+
+  it('re-exports canonical URL utility (added in kinds/repo slice 1)', async () => {
+    const mod = await import('../../src/index.js');
+    expect(mod.canonicalizeRepoUrl).toBeTypeOf('function');
+    expect(mod.tryCanonicalizeRepoUrl).toBeTypeOf('function');
+    expect(mod.isSimilarRepoUrl).toBeTypeOf('function');
+  });
+});
+
+describe('agent-workspace/protocol/repo', () => {
+  it('exports REPO_METHODS with the four canonical method names', async () => {
+    const mod = await import('../../src/protocol/repo.js');
+    expect(mod.REPO_METHODS.DECLARE).toBe('x-workspace/repo.declare');
+    expect(mod.REPO_METHODS.CHANGED).toBe('x-workspace/repo.changed');
+    expect(mod.REPO_METHODS.LIST).toBe('x-workspace/repo.list');
+    expect(mod.REPO_METHODS.RETRACT).toBe('x-workspace/repo.retract');
+  });
+
+  it('exports REPO_PROTOCOL_VERSION', async () => {
+    const mod = await import('../../src/protocol/repo.js');
+    expect(mod.REPO_PROTOCOL_VERSION).toBe('1');
+  });
+
+  it('re-exports resource-events constants for convenience', async () => {
+    const mod = await import('../../src/protocol/repo.js');
+    expect(mod.RESOURCE_MESH_EVENTS).toBeDefined();
+    expect(mod.compareMergeEvents).toBeTypeOf('function');
+  });
+});
+
+describe('agent-workspace/protocol (umbrella picks up repo)', () => {
+  it('re-exports REPO_METHODS via the umbrella', async () => {
+    const mod = await import('../../src/protocol/index.js');
+    expect(mod.REPO_METHODS).toBeDefined();
+    expect(mod.REPO_PROTOCOL_VERSION).toBe('1');
+  });
+});
+
+describe('agent-workspace/kinds/repo', () => {
+  it('exports the canonical URL utility', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.canonicalizeRepoUrl).toBeTypeOf('function');
+    expect(mod.tryCanonicalizeRepoUrl).toBeTypeOf('function');
+    expect(mod.isSimilarRepoUrl).toBeTypeOf('function');
+    expect(mod.setRepoIdentityConfig).toBeTypeOf('function');
+    expect(mod.getRepoIdentityConfig).toBeTypeOf('function');
+  });
+
+  it('exports the error hierarchy', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.RepoError).toBeDefined();
+    expect(mod.InvalidRepoUrlError).toBeDefined();
+    expect(mod.PolicyViolationError).toBeDefined();
+    expect(mod.CapabilityError).toBeDefined();
+    expect(mod.NotAttachedError).toBeDefined();
+  });
+
+  it('re-exports protocol shapes for convenience', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.REPO_METHODS).toBeDefined();
+    expect(mod.REPO_PROTOCOL_VERSION).toBe('1');
+    expect(mod.RESOURCE_MESH_EVENTS).toBeDefined();
+    expect(mod.compareMergeEvents).toBeTypeOf('function');
+  });
+
+  it('exports wire translators (slice 2)', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.toWireDeclare).toBeTypeOf('function');
+    expect(mod.fromWireDeclare).toBeTypeOf('function');
+    expect(mod.toWireChanged).toBeTypeOf('function');
+    expect(mod.fromWireChanged).toBeTypeOf('function');
+  });
+
+  it('exports policy hooks (slice 2)', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.effectiveVisibility).toBeTypeOf('function');
+    expect(mod.isVisibilityDowngrade).toBeTypeOf('function');
+    expect(mod.isVisibilityUpgrade).toBeTypeOf('function');
+  });
 });

@@ -46,6 +46,26 @@
         "types": "./dist/protocol/resource-events.d.cts",
         "default": "./dist/protocol/resource-events.cjs"
       }
+    },
+    "./protocol/repo": {
+      "import": {
+        "types": "./dist/protocol/repo.d.ts",
+        "default": "./dist/protocol/repo.js"
+      },
+      "require": {
+        "types": "./dist/protocol/repo.d.cts",
+        "default": "./dist/protocol/repo.cjs"
+      }
+    },
+    "./kinds/repo": {
+      "import": {
+        "types": "./dist/kinds/repo/index.d.ts",
+        "default": "./dist/kinds/repo/index.js"
+      },
+      "require": {
+        "types": "./dist/kinds/repo/index.d.cts",
+        "default": "./dist/kinds/repo/index.cjs"
+      }
     }
   },
   "files": [
