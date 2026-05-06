@@ -165,4 +165,19 @@ describe('agent-workspace/kinds/repo', () => {
     expect(mod.isVisibilityDowngrade).toBeTypeOf('function');
     expect(mod.isVisibilityUpgrade).toBeTypeOf('function');
   });
+
+  it('exports RepoManager (slice 3)', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.RepoManager).toBeTypeOf('function');
+  });
+
+  it('exports RepoClient (slice 4)', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.RepoClient).toBeTypeOf('function');
+  });
+
+  it('exports registerRepoHandlers (slice 4)', async () => {
+    const mod = await import('../../src/kinds/repo/index.js');
+    expect(mod.registerRepoHandlers).toBeTypeOf('function');
+  });
 });

@@ -66,6 +66,31 @@ export {
 // `compareMergeEvents` is also exported via policy.ts; the protocol re-export
 // below already covers it, so we don't duplicate the export here.
 
+// ── Manager (lifecycle: attach / detach / list / find) ────────────────────────
+
+export { RepoManager } from './manager.js';
+export type { RepoManagerConfig } from './manager.js';
+
+// `RepoHandleImpl` (the concrete class) is intentionally NOT exported.
+// Consumers interact via the `RepoHandle` interface from `./types.js`.
+
+// ── Agent-side client (transport wrapper) ─────────────────────────────────────
+
+export { RepoClient } from './client.js';
+export type {
+  RepoClientTransport,
+  RepoClientOptions,
+} from './client.js';
+
+// ── Server-side handler interface (hubs implement) ────────────────────────────
+
+export { registerRepoHandlers } from './server.js';
+export type {
+  RepoProtocolHandler,
+  RepoHandlerContext,
+  RepoMethodServer,
+} from './server.js';
+
 // ── Protocol shapes (re-export for convenience) ───────────────────────────────
 
 export {
