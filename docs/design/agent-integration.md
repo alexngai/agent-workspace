@@ -93,10 +93,19 @@ After the connection is up, wrap it in a `RepoClient`:
 import { RepoClient, type RepoClientTransport } from 'agent-workspace/kinds/repo';
 
 // Adapter: shim the MAP connection's API to RepoClientTransport.
-// MAP SDK connections typically expose `notify(method, params)` and
-// `callExtension(method, params)` — slot whichever applies.
+//
+// IMPORTANT: route `notify` through `callExtension` (a JSON-RPC request),
+// NOT through `sendNotification`. OpenHive — and other hubs that follow the
+// same pattern — register the `x-workspace/repo.*` methods as request
+// handlers on the MAP server's `additionalHandlers` table. JSON-RPC
+// notifications take a separate path on the server (`_notificationHandler`)
+// which is not wired up for these methods. So even though the protocol
+// describes declare/changed/retract as "notify" semantics (fire-and-forget),
+// the wire delivery has to be a request that returns void.
 const transport: RepoClientTransport = {
-  notify: (method, params) => connection.notify(method, params),
+  notify: async (method, params) => {
+    await connection.callExtension(method, params);
+  },
   request: (method, params) => connection.callExtension(method, params),
   // Optional: if the connection supports installing per-method request
   // handlers, RepoClient auto-installs the onList handler. Otherwise the
