@@ -16,6 +16,36 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
+    },
+    "./protocol": {
+      "import": {
+        "types": "./dist/protocol/index.d.ts",
+        "default": "./dist/protocol/index.js"
+      },
+      "require": {
+        "types": "./dist/protocol/index.d.cts",
+        "default": "./dist/protocol/index.cjs"
+      }
+    },
+    "./protocol/task": {
+      "import": {
+        "types": "./dist/protocol/task.d.ts",
+        "default": "./dist/protocol/task.js"
+      },
+      "require": {
+        "types": "./dist/protocol/task.d.cts",
+        "default": "./dist/protocol/task.cjs"
+      }
+    },
+    "./protocol/resource-events": {
+      "import": {
+        "types": "./dist/protocol/resource-events.d.ts",
+        "default": "./dist/protocol/resource-events.js"
+      },
+      "require": {
+        "types": "./dist/protocol/resource-events.d.cts",
+        "default": "./dist/protocol/resource-events.cjs"
+      }
     }
   },
   "files": [
@@ -51,6 +81,7 @@
     }
   },
   "dependencies": {
+    "git-url-parse": "^16.1.0",
     "yaml": "^2.7.0"
   },
   "devDependencies": {

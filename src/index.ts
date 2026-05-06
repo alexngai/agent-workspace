@@ -36,6 +36,33 @@ export type {
 } from './task/index.js';
 export { WORKSPACE_METHODS, WORKSPACE_METHODS_LEGACY } from './task/index.js';
 
+// Protocol — generic resource-lifecycle events (mesh sync)
+// Subpath imports also available: 'agent-workspace/protocol' / 'agent-workspace/protocol/resource-events'
+export {
+  RESOURCE_MESH_EVENTS,
+  compareMergeEvents,
+} from './protocol/resource-events.js';
+export type {
+  ResourceMeshEventName,
+  ResourceRedactedEvent,
+  ResourceArchivedEvent,
+  ResourceMergedEvent,
+} from './protocol/resource-events.js';
+
+// Canonical git remote URL utility — federation-friendly identity for repos
+export {
+  canonicalizeRepoUrl,
+  tryCanonicalizeRepoUrl,
+  isSimilarRepoUrl,
+  setRepoIdentityConfig,
+  getRepoIdentityConfig,
+  InvalidRepoUrlError,
+} from './lib/canonical-url.js';
+export type {
+  CanonicalRepoIdentity,
+  RepoIdentityConfig,
+} from './lib/canonical-url.js';
+
 // Types
 export type {
   Schema,
