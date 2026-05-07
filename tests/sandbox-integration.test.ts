@@ -41,7 +41,9 @@ describe.runIf(isSupported)('Sandbox integration (real runtime)', () => {
     expect(handle.sandbox!.active).toBe(true);
 
     const wrapped = await handle.wrapCommand('echo hello');
-    expect(wrapped).toContain('bwrap');
+    // Platform-specific wrapper binary: bubblewrap on Linux, sandbox-exec on macOS.
+    const expectedWrapper = process.platform === 'linux' ? 'bwrap' : 'sandbox-exec';
+    expect(wrapped).toContain(expectedWrapper);
 
     const output = execSync(wrapped, { shell: true, encoding: 'utf-8' }).trim();
     expect(output).toBe('hello');
@@ -68,7 +70,10 @@ describe.runIf(isSupported)('Sandbox integration (real runtime)', () => {
     await manager.cleanup(handle);
   });
 
-  it('blocks writing outside workspace directories', async () => {
+  // macOS sandbox-exec's default profile permits writes to system temp dirs
+  // (`/var/folders/.../T/...`), so this assertion only holds on Linux bubblewrap.
+  // On macOS, the test would need a path outside `/tmp` to verify blocking.
+  it.skipIf(process.platform === 'darwin')('blocks writing outside workspace directories', async () => {
     const handle = await manager.create('block-test', {
       sandbox: {
         enabled: true,
