@@ -11,7 +11,7 @@ revised: 2026-05-05
 
 This doc covers the **`repo` workspace kind** in detail — the protocol design, the package's public API, the protocol-level lifecycle flows, and the open questions specific to this kind. Background and rationale for adding the kind are in [`architecture.md`](./architecture.md).
 
-Hub-side concerns (persistence, REST, UI, federation materializer, swarm spawn integration) live in the consumer's docs — see openhive's `docs/design/repos-as-syncable-resources.md` for the reference consumer.
+Hub-side concerns (persistence, REST, UI, federation materializer, swarm spawn integration) live in the consumer's docs — see openhive's `CLAUDE.md` "Repos and Workspaces" section for the reference consumer.
 
 The package owns: protocol shapes, canonical URL utility, capability declarations, agent-side client, server-side handler interface. The package does not own: persistence (DAL is hub-side), federation (mesh-sync is hub-side), enforcement of policy layers, REST routes, UI.
 
@@ -722,4 +722,4 @@ What the protocol-level design **does not** do:
 ## Cross-references
 
 - [`architecture.md`](./architecture.md) — overall package architecture and direction.
-- OpenHive `docs/design/repos-as-syncable-resources.md` — reference consumer; covers persistence (DAL, schema), federation (mesh-sync materializer), REST routes, UI, swarm spawn integration, trajectory bootstrap, and openhive-specific policy layers.
+- OpenHive `CLAUDE.md` "Repos and Workspaces" — reference consumer; covers persistence (DAL, schema), federation (mesh-sync materializer), REST routes, UI, swarm spawn integration, trajectory bootstrap, and openhive-specific policy layers.

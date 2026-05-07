@@ -18,7 +18,7 @@ The recipe assumes:
   `notify(method, params)` and `request(method, params)` methods (or the
   agent-side equivalent of a JSON-RPC client).
 - The hub (e.g. openhive) registers handlers for the four `x-workspace/repo.*`
-  methods. See openhive's `docs/design/repos-as-syncable-resources.md` for
+  methods. See openhive's `CLAUDE.md` "Repos and Workspaces" section for
   the consumer-side wire-up.
 
 For the protocol design and full API, see [`repo-kind.md`](./repo-kind.md).
@@ -268,5 +268,5 @@ what" reference.
 - [`architecture.md`](./architecture.md) — package architecture
 - [`repo-kind.md`](./repo-kind.md) — protocol design + full API reference
 - [`sandbox.md`](./sandbox.md) — sandbox layer (independent of repo kind)
-- OpenHive `docs/design/repos-as-syncable-resources.md` — consumer-side
+- OpenHive `CLAUDE.md` "Repos and Workspaces" — consumer-side
   design (DAL, REST, federation, swarm spawn integration)

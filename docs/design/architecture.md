@@ -212,7 +212,7 @@ The package does **not** own:
 - Visibility enforcement (hub-side per its policy layers)
 - UI / REST routes (hub-side)
 
-OpenHive is the reference consumer; see `docs/design/repos-as-syncable-resources.md` in the openhive repo for the consumer-side persistence and federation design.
+OpenHive is the reference consumer; see openhive's `CLAUDE.md` "Repos and Workspaces" section for the consumer-side persistence and federation design.
 
 #### `environment` (new, composer)
 
@@ -612,6 +612,6 @@ Where this design diverges: none of the prior art federates workspaces. Federati
 
 ## Cross-references
 
-- **OpenHive design doc**: `references/openhive/docs/design/repos-as-syncable-resources.md` covers the *consumer-side* design — how openhive persists, federates, and exposes repos as syncable resources. It depends on the protocol shapes defined here.
+- **OpenHive consumer**: openhive's `CLAUDE.md` "Repos and Workspaces" section covers the *consumer-side* design — how openhive persists, federates, and exposes repos as syncable resources. It depends on the protocol shapes defined here.
 - **OpenHive sandbox-runtime peer**: openhive's swarm-hosting providers can integrate with this package's sandbox layer when spawning hosted swarms.
 - **agent-iam, agent-inbox**: peer packages that the `environment` kind composes via provider interfaces.
