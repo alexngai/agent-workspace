@@ -18,6 +18,8 @@ import {
   type RepoListParams,
   type RepoListResult,
   type RepoRetractParams,
+  type RepoBindingsParams,
+  type RepoBindingsResult,
   type WorkspaceCapability,
 } from '../../protocol/repo.js';
 
@@ -52,6 +54,7 @@ export interface RepoProtocolHandler {
   onChanged(params: RepoChangedParams, ctx: RepoHandlerContext): Promise<void>;
   onList(params: RepoListParams, ctx: RepoHandlerContext): Promise<RepoListResult>;
   onRetract(params: RepoRetractParams, ctx: RepoHandlerContext): Promise<void>;
+  onBindings(params: RepoBindingsParams, ctx: RepoHandlerContext): Promise<RepoBindingsResult>;
 }
 
 // ── Server contract ───────────────────────────────────────────────────────────
@@ -106,6 +109,10 @@ export function registerRepoHandlers(
       async (p, c) => {
         await handler.onRetract(p as RepoRetractParams, c as RepoHandlerContext);
       },
+    ],
+    [
+      REPO_METHODS.BINDINGS,
+      (p, c) => handler.onBindings(p as RepoBindingsParams, c as RepoHandlerContext),
     ],
   ];
 

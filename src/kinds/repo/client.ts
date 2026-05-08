@@ -13,6 +13,7 @@
 import type {
   RepoListParams,
   RepoListResult,
+  RepoBindingsResult,
   WorkspaceDeclareInput,
 } from '../../protocol/repo.js';
 import { REPO_METHODS } from '../../protocol/repo.js';
@@ -82,6 +83,17 @@ export class RepoClient {
   async changed(diff: RepoChangedDiff): Promise<void> {
     const params = toWireChanged(diff);
     await this.transport.notify(REPO_METHODS.CHANGED, params);
+  }
+
+  /**
+   * Pre-flight conflict check: who is bound to this repo?
+   * Returns visible bindings and federated peers that know about the repo.
+   */
+  async bindings(canonicalUrl: string): Promise<RepoBindingsResult> {
+    return this.transport.request<RepoBindingsResult>(
+      REPO_METHODS.BINDINGS,
+      { canonical_url: canonicalUrl },
+    );
   }
 
   /**

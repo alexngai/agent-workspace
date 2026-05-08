@@ -23,6 +23,8 @@ import type {
   RepoListParams,
   RepoListResult,
   RepoRetractParams,
+  RepoBindingsParams,
+  RepoBindingsResult,
   RepoVisibility,
   WorkspaceDeclareInput,
 } from '../../protocol/repo.js';
@@ -144,6 +146,25 @@ export class InMemoryRepoHandler implements RepoProtocolHandler {
         binding.visibility = target;
       }
     }
+  }
+
+  async onBindings(params: RepoBindingsParams, ctx: RepoHandlerContext): Promise<RepoBindingsResult> {
+    const bindings: RepoBindingsResult['bindings'] = [];
+
+    for (const binding of this.bindings.values()) {
+      if (binding.canonicalUrl !== params.canonical_url) continue;
+      if (binding.visibility === 'private' && binding.agentId !== ctx.agentId) continue;
+
+      bindings.push({
+        agent_id: binding.agentId,
+        workspace_id: bindingKey(binding.agentId, binding.canonicalUrl, binding.localPath),
+        local_path: binding.localPath,
+        visibility: binding.visibility,
+        declared_at: new Date().toISOString(),
+      });
+    }
+
+    return { bindings, federated_peers: [] };
   }
 
   // ── Inspection helpers (test introspection) ────────────────────────────────

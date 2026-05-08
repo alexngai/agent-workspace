@@ -40,6 +40,7 @@ class CountingHandler implements RepoProtocolHandler {
     onChanged: [] as Array<{ params: unknown; ctx: unknown }>,
     onList: [] as Array<{ params: unknown; ctx: unknown }>,
     onRetract: [] as Array<{ params: unknown; ctx: unknown }>,
+    onBindings: [] as Array<{ params: unknown; ctx: unknown }>,
   };
 
   async onDeclare(params: unknown, ctx: unknown): Promise<void> {
@@ -55,12 +56,16 @@ class CountingHandler implements RepoProtocolHandler {
   async onRetract(params: unknown, ctx: unknown): Promise<void> {
     this.calls.onRetract.push({ params, ctx });
   }
+  async onBindings(params: unknown, ctx: unknown): Promise<{ bindings: never[]; federated_peers: never[] }> {
+    this.calls.onBindings.push({ params, ctx });
+    return { bindings: [], federated_peers: [] };
+  }
 }
 
 const baseCtx: RepoHandlerContext = { agentId: 'a1', swarmId: 's1' };
 
-describe('registerRepoHandlers — wires all four methods', () => {
-  it('registers handlers for all four x-workspace/repo.* methods', () => {
+describe('registerRepoHandlers — wires all five methods', () => {
+  it('registers handlers for all five x-workspace/repo.* methods', () => {
     const server = new FakeServer();
     const handler = new CountingHandler();
     registerRepoHandlers(server, handler);
@@ -69,7 +74,7 @@ describe('registerRepoHandlers — wires all four methods', () => {
     expect(server.handlers.has(REPO_METHODS.CHANGED)).toBe(true);
     expect(server.handlers.has(REPO_METHODS.LIST)).toBe(true);
     expect(server.handlers.has(REPO_METHODS.RETRACT)).toBe(true);
-    expect(server.handlers.size).toBe(4);
+    expect(server.handlers.size).toBe(5);
   });
 });
 
@@ -140,11 +145,11 @@ describe('registerRepoHandlers — context propagation', () => {
 });
 
 describe('registerRepoHandlers — unregister behavior', () => {
-  it('unregister tears down all four handlers when removeHandler is supplied', () => {
+  it('unregister tears down all five handlers when removeHandler is supplied', () => {
     const server = new FakeServer({ supportsRemove: true });
     const handler = new CountingHandler();
     const { unregister } = registerRepoHandlers(server, handler);
-    expect(server.handlers.size).toBe(4);
+    expect(server.handlers.size).toBe(5);
 
     unregister();
     expect(server.handlers.size).toBe(0);
@@ -154,10 +159,10 @@ describe('registerRepoHandlers — unregister behavior', () => {
     const server = new FakeServer({ supportsRemove: false });
     const handler = new CountingHandler();
     const { unregister } = registerRepoHandlers(server, handler);
-    expect(server.handlers.size).toBe(4);
+    expect(server.handlers.size).toBe(5);
 
     expect(() => unregister()).not.toThrow();
-    expect(server.handlers.size).toBe(4); // unchanged
+    expect(server.handlers.size).toBe(5); // unchanged
   });
 
   it('multiple unregisters are safe', () => {
