@@ -30,6 +30,8 @@ export const REPO_METHODS = {
   LIST: 'x-workspace/repo.list',
   /** agent → hub: downgrade own bindings to private. */
   RETRACT: 'x-workspace/repo.retract',
+  /** hub → hub/agent: query all active bindings for a canonical URL. */
+  BINDINGS: 'x-workspace/repo.bindings',
 } as const;
 
 export type RepoMethodName = (typeof REPO_METHODS)[keyof typeof REPO_METHODS];
@@ -80,6 +82,28 @@ export interface RepoRetractParams {
   canonical_url: string;
   /** Omit to retract all bindings for this repo on the calling agent. */
   local_path?: string;
+}
+
+export interface RepoBindingsParams {
+  canonical_url: string;
+}
+
+export interface RepoBindingEntry {
+  agent_id: string;
+  workspace_id: string;
+  local_path: string;
+  visibility: RepoVisibility;
+  declared_at: string;
+}
+
+export interface FederatedPeerEntry {
+  hub_id: string;
+  hub_url: string;
+}
+
+export interface RepoBindingsResult {
+  bindings: RepoBindingEntry[];
+  federated_peers: FederatedPeerEntry[];
 }
 
 // ── Capability declaration (camelCase per MAP convention) ─────────────────────
